@@ -3,6 +3,7 @@
 import { useMotionValue, useReducedMotion, useSpring, useTransform, motion } from "framer-motion";
 import type { MouseEvent } from "react";
 import BridgeSvg from "./BridgeSvg";
+import BridgeSvgVertical from "./BridgeSvgVertical";
 import FilePacket from "./FilePacket";
 import PhoneMockup from "./PhoneMockup";
 import WaitlistCard from "./WaitlistCard";
@@ -103,33 +104,31 @@ export default function Scene() {
       </div>
 
       {/* ============ mobile: vertical crossing ============ */}
-      <div className="relative mx-auto flex w-full max-w-sm flex-col items-center gap-9 px-6 py-6 md:hidden">
-        {/* vertical cable */}
-        <svg
-          className="absolute inset-x-0 top-16 bottom-16 mx-auto h-[calc(100%-8rem)] w-8"
-          viewBox="0 0 32 800"
-          preserveAspectRatio="none"
-          aria-hidden
-        >
-          <line x1="16" y1="0" x2="16" y2="800" stroke="#8a97e8" strokeOpacity="0.25" strokeWidth="2" />
-          <line
-            x1="16"
-            y1="0"
-            x2="16"
-            y2="800"
-            stroke="#93c5fd"
-            strokeOpacity="0.6"
-            strokeWidth="2"
-            className="cable-vertical"
+      <div className="relative mx-auto flex w-full max-w-sm flex-col items-center gap-12 px-6 py-6 md:hidden">
+        {/* stars */}
+        {STARS.slice(0, 18).map((s, i) => (
+          <span
+            key={`m-${i}`}
+            className="star"
+            style={{
+              left: s.left,
+              top: `${(i * 89.4) % 100}%`,
+              width: s.size,
+              height: s.size,
+              animationDelay: s.delay,
+            }}
           />
-        </svg>
+        ))}
+
+        {/* vertical bridge: deck down the center, pylons alternating sides */}
+        <BridgeSvgVertical className="absolute inset-x-0 top-14 bottom-14 h-[calc(100%-7rem)] w-full" />
 
         {/* packet track: from the top phone down to the bottom phone */}
         <div className="absolute bottom-28 top-28 left-1/2 z-10 w-px">
           <FilePacket vertical />
         </div>
 
-        <div className="z-20 w-36">
+        <div className="z-20 w-40">
           <div className="animate-float">
             <PhoneMockup platform="ios" />
             <p className="mt-2.5 whitespace-nowrap text-center font-mono text-xs font-semibold tracking-[0.2em] text-orange-300">
@@ -142,7 +141,7 @@ export default function Scene() {
           <WaitlistCard />
         </div>
 
-        <div className="z-20 w-36">
+        <div className="z-20 w-40">
           <div className="animate-float-delayed">
             <PhoneMockup platform="android" />
             <p className="mt-2.5 whitespace-nowrap text-center font-mono text-xs font-semibold tracking-[0.2em] text-sky-300">

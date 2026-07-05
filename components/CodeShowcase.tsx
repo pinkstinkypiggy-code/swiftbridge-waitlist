@@ -86,7 +86,10 @@ const SWIFT_LINES: Line[] = [
     { t: "Stepper", c: X.ty },
     { t: "(", c: X.pu },
     { t: '"Qty \\(quantity)"', c: X.st },
-    { t: ", ", c: X.pu },
+    { t: ",", c: X.pu },
+  ],
+  [
+    { t: "                    " },
     { t: "value", c: X.pr },
     { t: ": ", c: X.pu },
     { t: "$quantity", c: X.pl },
@@ -143,7 +146,10 @@ const DART_LINES: Line[] = [
     { t: "CheckoutCard", c: V.ty },
     { t: "> ", c: V.pu },
     { t: "createState", c: V.fn },
-    { t: "() => ", c: V.pu },
+    { t: "() =>", c: V.pu },
+  ],
+  [
+    { t: "      " },
     { t: "_CardState", c: V.ty },
     { t: "();", c: V.pu },
   ],
@@ -264,7 +270,7 @@ function CodeWindow({
           </span>
         </div>
         {/* code */}
-        <pre className="overflow-x-auto px-4 py-3.5 font-mono text-[0.66rem] leading-[1.7]">
+        <pre className="overflow-x-auto px-3 py-3.5 font-mono text-[0.58rem] leading-[1.7] sm:px-4 sm:text-[0.66rem]">
           {lines.map((line, i) => (
             <div key={i} className="flex whitespace-pre">
               <span className="mr-4 w-4 shrink-0 select-none text-right text-slate-600">
@@ -299,9 +305,10 @@ function FloatingWindow({
   floatDelay: number;
 }) {
   const prefersReducedMotion = useReducedMotion();
-  if (prefersReducedMotion) return <div>{children}</div>;
+  if (prefersReducedMotion) return <div className="min-w-0">{children}</div>;
   return (
     <motion.div
+      className="min-w-0"
       initial={{ opacity: 0, y: 40, rotate: rotate * 2 }}
       whileInView={{ opacity: 1, y: 0, rotate }}
       viewport={{ once: true, margin: "-80px" }}
@@ -346,6 +353,20 @@ export default function CodeShowcase() {
         <FloatingWindow rotate={-1.8} delay={0} floatDelay={0}>
           <CodeWindow title="CheckoutCard.swift" lines={SWIFT_LINES} flavor="xcode" />
         </FloatingWindow>
+
+        {/* conversion chip between the stacked windows (mobile) */}
+        <div className="-my-2 flex justify-center md:hidden">
+          <div className="rounded-full bg-gradient-to-r from-orange-400/70 via-white/20 to-sky-400/70 p-px shadow-[0_0_40px_-6px_rgba(109,99,255,0.7)]">
+            <div className="flex items-center gap-2 rounded-full bg-[#0a0d1f]/90 px-4 py-2 backdrop-blur">
+              <span className="font-mono text-[0.62rem] tracking-widest text-slate-300">
+                SWIFTBRIDGE
+              </span>
+              <span className="bg-gradient-to-r from-orange-300 to-sky-300 bg-clip-text text-sm font-bold text-transparent">
+                ⇅
+              </span>
+            </div>
+          </div>
+        </div>
 
         <FloatingWindow rotate={1.8} delay={0.15} floatDelay={3.2}>
           <div className="md:mt-12">
