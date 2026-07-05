@@ -1,3 +1,4 @@
+import CodeShowcase from "@/components/CodeShowcase";
 import Hero from "@/components/Hero";
 import Scene from "@/components/Scene";
 
@@ -26,8 +27,14 @@ export default function Home() {
             SwiftBridge
           </span>
         </div>
-        <span className="font-mono text-[0.65rem] tracking-widest text-slate-500">
-          iOS ⇄ ANDROID
+        <span className="flex items-baseline gap-2.5 text-base font-semibold tracking-[0.14em] sm:text-lg">
+          <span className="bg-gradient-to-r from-orange-300 to-rose-400 bg-clip-text text-transparent">
+            iOS
+          </span>
+          <span className="text-slate-500">⇄</span>
+          <span className="bg-gradient-to-r from-sky-300 to-cyan-400 bg-clip-text text-transparent">
+            Android
+          </span>
         </span>
       </header>
 
@@ -36,6 +43,8 @@ export default function Home() {
       <div className="flex flex-1 items-center py-8 md:py-0">
         <Scene />
       </div>
+
+      <CodeShowcase />
 
       <footer className="px-6 pb-6 pt-2 text-center font-mono text-[0.65rem] tracking-widest text-slate-600">
         SWIFTBRIDGE © 2026

@@ -71,7 +71,7 @@ export default function Scene() {
           >
             <div className="animate-float">
               <PhoneMockup platform="ios" />
-              <p className="mt-3 text-center font-mono text-[0.65rem] tracking-widest text-slate-500">
+              <p className="mt-3 whitespace-nowrap text-center font-mono text-sm font-semibold tracking-[0.2em] text-orange-300">
                 SWIFTUI · IOS
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function Scene() {
           >
             <div className="animate-float-delayed">
               <PhoneMockup platform="android" />
-              <p className="mt-3 text-center font-mono text-[0.65rem] tracking-widest text-slate-500">
+              <p className="mt-3 whitespace-nowrap text-center font-mono text-sm font-semibold tracking-[0.2em] text-sky-300">
                 FLUTTER · ANDROID
               </p>
             </div>
@@ -132,7 +132,7 @@ export default function Scene() {
         <div className="z-20 w-36">
           <div className="animate-float">
             <PhoneMockup platform="ios" />
-            <p className="mt-2.5 text-center font-mono text-[0.6rem] tracking-widest text-slate-500">
+            <p className="mt-2.5 whitespace-nowrap text-center font-mono text-xs font-semibold tracking-[0.2em] text-orange-300">
               SWIFTUI · IOS
             </p>
           </div>
@@ -145,7 +145,7 @@ export default function Scene() {
         <div className="z-20 w-36">
           <div className="animate-float-delayed">
             <PhoneMockup platform="android" />
-            <p className="mt-2.5 text-center font-mono text-[0.6rem] tracking-widest text-slate-500">
+            <p className="mt-2.5 whitespace-nowrap text-center font-mono text-xs font-semibold tracking-[0.2em] text-sky-300">
               FLUTTER · ANDROID
             </p>
           </div>
