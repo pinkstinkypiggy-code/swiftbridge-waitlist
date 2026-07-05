@@ -74,7 +74,7 @@ export default function WaitlistCard() {
               type="email"
               required
               autoComplete="email"
-              placeholder="you@yourapp.com"
+              placeholder="name@example.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
