@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #04050e;
+  --foreground: #e7eaf6;
+  --swift: #f97316;
+  --swift-soft: #fdba74;
+  --dart: #38bdf8;
+  --dart-soft: #7dd3fc;
+  --accent-a: #38bdf8;
+  --accent-b: #8b5cf6;
 }
 
 @theme inline {
@@ -12,15 +18,117 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(1100px 520px at 12% -8%, rgba(59, 91, 255, 0.16), transparent 62%),
+    radial-gradient(1000px 540px at 88% -4%, rgba(124, 58, 237, 0.15), transparent 62%),
+    radial-gradient(1200px 500px at 50% 118%, rgba(34, 211, 238, 0.08), transparent 60%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* film grain overlay */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- bridge & scene animations ---- */
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+.animate-float {
+  animation: float-y 7s ease-in-out infinite;
+}
+.animate-float-delayed {
+  animation: float-y 7s ease-in-out -3.5s infinite;
+}
+
+/* light trail running along a cable (stroke length normalized via pathLength) */
+@keyframes cable-run {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+.cable-light {
+  stroke-dasharray: 14 86;
+  stroke-dashoffset: 100;
+  animation: cable-run 6.5s linear infinite;
+}
+
+@keyframes beacon {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-beacon {
+  animation: beacon 2.6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+.star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #cdd8ff;
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+/* dashes flowing down the mobile vertical cable */
+@keyframes flow-down {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -160;
+  }
+}
+.cable-vertical {
+  stroke-dasharray: 6 14;
+  animation: flow-down 4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-delayed,
+  .cable-light,
+  .animate-beacon,
+  .star,
+  .cable-vertical {
+    animation: none !important;
+  }
+  .cable-light {
+    display: none;
+  }
 }
