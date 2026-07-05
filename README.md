@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SwiftBridge — waitlist landing page
 
-## Getting Started
+Animated waitlist landing page for **SwiftBridge**, a tool that converts SwiftUI
+files into Flutter files (iOS → Android app porting).
 
-First, run the development server:
+Built with Next.js (App Router) + TypeScript, Tailwind CSS, and Framer Motion.
+A `.swift` file packet crosses an SVG cable-stayed bridge, passes through the
+glass waitlist card, and arrives on the Android shore as a `.dart` file.
+All heavy motion is disabled for users with `prefers-reduced-motion`.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Waitlist configuration (required)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Signups are forwarded **server-side** from `/api/waitlist` to a Google Apps
+Script Web App, so the endpoint URL is never exposed to the browser and there
+are no CORS issues.
 
-## Learn More
+1. Create a Google Sheet, then open **Extensions → Apps Script** and paste:
 
-To learn more about Next.js, take a look at the following resources:
+   ```js
+   function doPost(e) {
+     const { email } = JSON.parse(e.postData.contents);
+     SpreadsheetApp.getActiveSpreadsheet()
+       .getActiveSheet()
+       .appendRow([email, new Date()]);
+     return ContentService.createTextOutput(
+       JSON.stringify({ ok: true })
+     ).setMimeType(ContentService.MimeType.JSON);
+   }
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Deploy → New deployment → Web app**, execute as *Me*, access:
+   *Anyone*. Copy the deployment URL.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Put it in `.env.local` (already gitignored):
 
-## Deploy on Vercel
+   ```
+   SHEET_ENDPOINT="https://script.google.com/macros/s/…/exec"
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying on Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project deploys with zero config — just remember to set the
+**`SHEET_ENDPOINT` environment variable** in your Vercel project settings
+(Settings → Environment Variables) before or after the first deploy.
